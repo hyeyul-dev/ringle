@@ -70,3 +70,6 @@ pickle-email-*.html
 /config/master.key
 
 /config/credentials/development.key
+
+
+.vscode
