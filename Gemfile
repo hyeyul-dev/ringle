@@ -22,10 +22,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
-gem 'mysql2'
-gem 'kaminari' # for pagenation
-gem 'ranked-model' # for sorting
 gem 'discard' # for soft delete
+gem 'kaminari' # for pagenation
+gem 'mysql2'
+gem 'ranked-model' # for sorting
 
 gem 'grape'
 gem 'grape_on_rails_routes'
@@ -33,15 +33,16 @@ gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
 
-gem 'elasticsearch-rails', '~> 7'
 gem 'elasticsearch-model', '~> 7'
+gem 'elasticsearch-rails', '~> 7'
+gem 'nokogiri'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'active_record_query_trace'
-  gem 'bullet'
   gem 'annotate'
+  gem 'bullet'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', require: false
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
@@ -51,9 +52,9 @@ end
 group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'awesome_print'
   gem 'spring'
   gem 'spring-watcher-listen'
-  gem 'awesome_print'
 end
 group :test do
   gem 'database_cleaner'

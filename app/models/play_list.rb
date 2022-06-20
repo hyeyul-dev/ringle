@@ -15,7 +15,7 @@
 class PlayList < ApplicationRecord
   belongs_to :target, polymorphic: true, foreign_key: 'target_id'
 
-  has_many :musics, through: :music_play_lists
+  has_many :musics, through: :music_play_lists, dependent: :destroy
 
   validates :target_type, inclusion: { in: %w[User Group] }
   validates :target_id, uniqueness: { scope: :target_type }
