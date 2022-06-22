@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_18_084230) do
+ActiveRecord::Schema.define(version: 2022_06_21_105433) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_084230) do
   end
 
   create_table "musics", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.integer "like_count", default: 0
     t.bigint "album_id", null: false
     t.datetime "created_at", precision: 6, null: false

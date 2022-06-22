@@ -8,5 +8,6 @@
 #  updated_at :datetime         not null
 #
 class Artist < ApplicationRecord
+  has_many :music_artists
   has_many :musics, through: :music_artists
 end

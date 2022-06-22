@@ -1,10 +1,14 @@
 class CreateUserGroups < ActiveRecord::Migration[6.1]
-  def change
+  def up
     create_table :user_groups do |t|
       t.references :user, null: false, foreign_key: true
       t.references :group, null: false, foreign_key: true
 
       t.timestamps
     end
+  end
+
+  def down
+    drop_table :user_groups
   end
 end
