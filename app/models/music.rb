@@ -54,6 +54,7 @@ class Music < ApplicationRecord
       indexes :album do
         indexes :id, type: 'integer'
         indexes :title, type: 'text', analyzer: 'korean'
+        indexes :created_at, type: 'date'
       end
       indexes :artists do
         indexes :id, type: 'integer'
@@ -64,10 +65,10 @@ class Music < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[id title like_count],
+      only: %i[id title like_count created_at],
       include: {
         album: {
-          only: %i[id title]
+          only: %i[id title created_at]
         },
         artists: {
           only: %i[id name]
@@ -76,24 +77,33 @@ class Music < ApplicationRecord
     )
   end
 
-  def self.search_published(query_string)
-    return [] if query_string.empty?
+  def self.search_published(query, sort, started_at, ended_at)
+    return [] if query.empty?
+
+    if started_at && ended_at
+      filtered_date = {
+        range: {
+          created_at: {
+            gte: started_at, # Greater than or equal to
+            lte: ended_at # Less than or equal to
+          }
+        }
+      }
+    end
 
     search(
-      { sort: [
-        { _score: 'desc' },
-        { id: 'desc' }
-      ],
+      { sort: sorting(sort),
         query: {
           bool: {
             must: [
+              filtered_date,
               {
                 bool: {
                   minimum_should_match: 1,
                   should: [
                     {
                       multi_match: {
-                        query: query_string,
+                        query: query,
                         operator: 'and'
                       }
                     }
@@ -104,5 +114,24 @@ class Music < ApplicationRecord
           }
         } }
     )
+  end
+
+  def self.sorting(type)
+    case type
+    when 'accuracy' # 정확도순
+      [
+        { _score: 'desc' },
+        { id: 'desc' }
+      ]
+    when 'recency' # 최신순
+      [
+        { created_at: 'desc' }
+      ]
+    when 'popularity' # 인기순
+      [
+        { like_count: 'desc' },
+        { id: 'desc' }
+      ]
+    end
   end
 end

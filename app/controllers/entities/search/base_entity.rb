@@ -2,6 +2,7 @@ class Entities::Search::BaseEntity < Grape::Entity
   expose :music_title, documentation: { type: 'String', desc: '노래 제목' }
   expose :album_title, documentation: { type: 'String', desc: '앨범 제목' }
   expose :artists_name, documentation: { type: 'String', desc: '가수 이름', is_array: true }
+  expose :like_count, documentation: { type: 'Integer', desc: '좋아요 수' }
 
   def music_title
     object.title
