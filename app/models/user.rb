@@ -8,6 +8,6 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
-  has_many :play_lists, as: :target, dependent: :destroy
+  has_one :play_list, as: :target, dependent: :destroy
   has_many :groups, through: :user_groups, dependent: :destroy
 end

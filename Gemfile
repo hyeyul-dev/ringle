@@ -31,7 +31,7 @@ gem 'grape-swagger-entity'
 gem 'grape-swagger-representable'
 gem 'kaminari' # for pagenation
 gem 'mysql2'
-gem 'ranked-model' # for sorting
+gem 'pundit'
 
 gem 'elasticsearch-model', '~> 7'
 gem 'elasticsearch-rails', '~> 7'
