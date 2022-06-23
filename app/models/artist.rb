@@ -10,4 +10,11 @@
 class Artist < ApplicationRecord
   has_many :music_artists
   has_many :musics, through: :music_artists
+  after_commit :update_musics, on: :update
+
+  private
+
+  def update_musics
+    Music.update_music(musics)
+  end
 end

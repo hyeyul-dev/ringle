@@ -225,6 +225,8 @@ GEM
     public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
+    pundit (2.2.0)
+      activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.3.1)
     rack-accept (0.4.5)
@@ -259,8 +261,6 @@ GEM
       thor (~> 1.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    ranked-model (0.4.8)
-      activerecord (>= 4.2)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -347,8 +347,8 @@ DEPENDENCIES
   mysql2
   nokogiri
   puma (~> 5.0)
+  pundit
   rails (~> 6.1.6)
-  ranked-model
   rubocop
   rubocop-rails
   simplecov

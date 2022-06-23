@@ -23,7 +23,8 @@ class Music < ApplicationRecord
   index_name [model_name.singular, Rails.env].join('_')
 
   belongs_to :album
-  has_many :music_artists
+  has_many :music_play_lists, dependent: :destroy, inverse_of: :music
+  has_many :music_artists, dependent: :destroy, inverse_of: :music
   has_many :artists, through: :music_artists
 
   settings index: {
@@ -31,12 +32,14 @@ class Music < ApplicationRecord
       analyzer: {
         korean: {
           type: 'custom',
-          tokenizer: 'nori_tokenizer'
+          tokenizer: 'nori_tokenizer',
+          filter: %w[lowercase asciifolding]
         }
       },
       tokenizer: {
         nori_tokenizer: {
           type: 'nori_tokenizer',
+          filter: %w[lowercase asciifolding],
           index_eojeol: false
         }
       }
@@ -77,7 +80,7 @@ class Music < ApplicationRecord
     )
   end
 
-  def self.search_published(query, sort, started_at, ended_at)
+  def self.search_published(query, sort, started_at = nil, ended_at = nil)
     return [] if query.empty?
 
     if started_at && ended_at
@@ -132,6 +135,32 @@ class Music < ApplicationRecord
         { like_count: 'desc' },
         { id: 'desc' }
       ]
+    end
+  end
+
+  def self.update_album(album, options = {})
+    options[:index] ||= index_name
+    options[:type] ||= document_type
+    options[:wait_for_completion] ||= false
+    options[:body] = {
+      conflicts: :proceed,
+      query: {
+        match: {
+          'album.id': album.id
+        }
+      },
+      script: {
+        lang: :painless,
+        source: 'ctx._source.album.title = params.album.title',
+        params: { album: { title: album.title } }
+      }
+    }
+    __elasticsearch__.client.update_by_query(options)
+  end
+
+  def self.update_music(musics)
+    musics.each do |music|
+      music.__elasticsearch__.update_document({ type: document_type })
     end
   end
 end

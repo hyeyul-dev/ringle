@@ -74,3 +74,5 @@ pickle-email-*.html
 
 .vscode
 /app/import.rb
+/app/melon_sample.csv
+/app/melon_sample_2011.csv

@@ -9,5 +9,5 @@
 #
 class Group < ApplicationRecord
   has_many :users, through: :user_groups
-  has_many :play_lists, as: :target
+  has_one :play_list, as: :target
 end
