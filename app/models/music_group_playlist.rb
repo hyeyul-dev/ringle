@@ -27,6 +27,6 @@ class MusicGroupPlaylist < ApplicationRecord
   before_commit :delete_music_group_play_list, on: :create
 
   def delete_music_group_play_list
-    group_playlist.music_group_playlists.first.destroy if group_playlist.music_group_playlists.size >= 10
+    group_playlist.music_group_playlists.first.destroy if group_playlist.music_group_playlists.size >= 100
   end
 end

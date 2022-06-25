@@ -10,7 +10,7 @@
 class User < ApplicationRecord
   has_one :user_playlist, dependent: :destroy
   has_many :user_groups, dependent: :destroy
-  has_many :groups, through: :user_groups, dependent: :destroy
+  has_many :groups, through: :user_groups
   has_many :group_playlists, through: :group
 
   after_commit :create_playlist, on: :create
@@ -18,6 +18,6 @@ class User < ApplicationRecord
   alias playlist user_playlist
 
   def create_playlist
-    UserPlaylist.create(user_id: id)
+    UserPlaylist.create!(user_id: id)
   end
 end
