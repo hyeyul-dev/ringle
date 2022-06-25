@@ -24,9 +24,9 @@ class MusicGroupPlaylist < ApplicationRecord
   belongs_to :group_playlist
   belongs_to :creator, class_name: :User
 
-  before_commit :delete_music_group_play_list, on: :create
+  before_commit :delete_music_group_playlist, on: :create
 
-  def delete_music_group_play_list
+  def delete_music_group_playlist
     group_playlist.music_group_playlists.first.destroy if group_playlist.music_group_playlists.size >= 100
   end
 end

@@ -49,9 +49,9 @@ class UserPlaylists < Grape::API
     end
     delete do
       if params[:music_id].instance_of?(Integer)
-        user_play_list.musics.find_by(music_id: params[:music_id])&.destroy
+        user_playlist.music_user_playlists.find_by(music_id: params[:music_id])&.destroy
       else
-        user_play_list.musics.where(music_id: params[:music_id]).destroy_all
+        user_playlist.music_user_playlists.where(music_id: params[:music_id]).destroy_all
       end
 
       body nil

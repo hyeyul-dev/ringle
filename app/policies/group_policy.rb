@@ -1,5 +1,5 @@
 class GroupPolicy < ApplicationPolicy
   def update?
-   record.users.include?(user)
+    record.user_ids.include?(user.id)
   end
 end

@@ -121,7 +121,7 @@ class Groups < Grape::API
         if params[:music_group_playlist_id].instance_of?(Integer)
           group_playlist.music_group_playlists.find_by(music_id: params[:music_group_playlist_id])&.destroy
         else
-          group_play_list.music_group_playlists.where(music_id: params[:music_group_playlist_id]).destroy_all
+          group_playlist.music_group_playlists.where(music_id: params[:music_group_playlist_id]).destroy_all
         end
 
         body nil
