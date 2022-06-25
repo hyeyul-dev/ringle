@@ -8,6 +8,9 @@
 #  updated_at :datetime         not null
 #
 class Group < ApplicationRecord
+  has_many :user_groups, dependent: :destroy
   has_many :users, through: :user_groups
-  has_one :play_list, as: :target
+  has_one :group_playlist
+
+  alias playlist group_playlist
 end

@@ -5,6 +5,7 @@
 #  id                :bigint           not null, primary key
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  creator_id        :integer          not null
 #  group_playlist_id :bigint           not null
 #  music_id          :bigint           not null
 #
@@ -21,6 +22,7 @@
 class MusicGroupPlaylist < ApplicationRecord
   belongs_to :music
   belongs_to :group_playlist
+  belongs_to :creator, class_name: :User
 
   before_commit :delete_music_group_play_list, on: :create
 

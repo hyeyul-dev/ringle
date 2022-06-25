@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_one :user_playlist, dependent: :destroy
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups, dependent: :destroy
+  has_many :group_playlists, through: :group
 
   alias playlist user_playlist
 end

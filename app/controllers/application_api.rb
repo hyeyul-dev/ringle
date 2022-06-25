@@ -9,5 +9,6 @@ class ApplicationApi < Grape::API
   end
 
   mount Search
-  mount PlayLists
+  mount UserPlaylists
+  mount GroupPlaylists
 end

@@ -1,5 +1,5 @@
 class MusicDenomalizer
-  att_reader :music
+  attr_reader :music
 
   def initialize(music)
     @music = music
