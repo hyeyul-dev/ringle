@@ -13,4 +13,6 @@ class Group < ApplicationRecord
   has_one :group_playlist
 
   alias playlist group_playlist
+
+  accepts_nested_attributes_for :user_groups, allow_destroy: true
 end

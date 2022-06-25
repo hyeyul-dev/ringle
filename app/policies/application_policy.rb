@@ -1,9 +1,10 @@
-class ApplicationPolicy
-  attr_reader :member, :user, :record
+# frozen_string_literal: true
 
-  def initialize(context, record)
-    @member = context.try(:member)
-    @user = context.try(:user) || context
+class ApplicationPolicy
+  attr_reader :user, :record
+
+  def initialize(user, record)
+    @user = user
     @record = record
   end
 
@@ -33,5 +34,20 @@ class ApplicationPolicy
 
   def destroy?
     false
+  end
+
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      raise NotImplementedError, "You must define #resolve in #{self.class}"
+    end
+
+    private
+
+    attr_reader :user, :scope
   end
 end

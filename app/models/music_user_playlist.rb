@@ -25,6 +25,6 @@ class MusicUserPlaylist < ApplicationRecord
   before_commit :delete_music_user_playlist, on: :create
 
   def delete_music_user_playlist
-    user_playlist.music_user_playlists.first.destroy if user_playlist.music_user_playlists.size >= 10
+    user_playlist.music_user_playlists.first.destroy if user_playlist.music_user_playlists.size >= 100
   end
 end

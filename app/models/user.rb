@@ -13,5 +13,11 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups, dependent: :destroy
   has_many :group_playlists, through: :group
 
+  after_commit :create_playlist, on: :create
+
   alias playlist user_playlist
+
+  def create_playlist
+    UserPlaylist.create(user_id: id)
+  end
 end
