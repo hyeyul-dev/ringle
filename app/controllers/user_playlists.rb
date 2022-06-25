@@ -8,10 +8,12 @@ class UserPlaylists < Grape::API
   end
 
   resource :user_playlists do
-    desc '재생목록 추가' do
-      summary '재생목록 추가'
+    desc '재생목록 노래 추가' do
+      summary '재생목록 노래 추가'
       tags ['UserPlayList']
       failure [
+        { code: 400, message: 'Bad Request' },
+        { code: 403, message: 'Forbidden' },
         { code: 404, message: 'Not found' }
       ]
     end
@@ -20,7 +22,6 @@ class UserPlaylists < Grape::API
       requires :music_id, types: [Integer, Array[Integer]], desc: '노래 id', documentation: { param_type: 'body' }
     end
     post do
-      current_user.playlist.create! if current_user.playlist.nil?
       count = (user_playlist.music_user_playlists.size - 100)
       if params[:music_id].instance_of?(Integer)
         user_playlist.music_user_playlists.create!(music_id: params[:music_id])
@@ -40,6 +41,8 @@ class UserPlaylists < Grape::API
       summary '재생목록 노래 삭제'
       tags ['UserPlayList']
       failure [
+        { code: 400, message: 'Bad Request' },
+        { code: 403, message: 'Forbidden' },
         { code: 404, message: 'Not found' }
       ]
     end

@@ -16,6 +16,8 @@ class Groups < Grape::API
       summary '그룹만들기'
       tags ['Group']
       failure [
+        { code: 400, message: 'Bad Request' },
+        { code: 403, message: 'Forbidden' },
         { code: 404, message: 'Not found' }
       ]
     end
@@ -39,6 +41,8 @@ class Groups < Grape::API
       summary '그룹 수정 및 유저 추가'
       tags ['Group']
       failure [
+        { code: 400, message: 'Bad Request' },
+        { code: 403, message: 'Forbidden' },
         { code: 404, message: 'Not found' }
       ]
     end
@@ -76,6 +80,8 @@ class Groups < Grape::API
         summary '재생목록 추가'
         tags ['GroupPlaylist']
         failure [
+          { code: 400, message: 'Bad Request' },
+          { code: 403, message: 'Forbidden' },
           { code: 404, message: 'Not found' }
         ]
       end
@@ -85,7 +91,7 @@ class Groups < Grape::API
         requires :music_id, types: [Integer, Array[Integer]], desc: '노래 id', documentation: { param_type: 'body' }
       end
       post do
-        authorize group_play_list, create?
+        authorize group_play_list, :create?
 
         count = (group_playlist.music_group_playlists.size - 100)
         if params[:music_id].instance_of?(Integer)
@@ -107,6 +113,8 @@ class Groups < Grape::API
         summary '재생목록 노래 삭제'
         tags ['UserPlayList']
         failure [
+          { code: 400, message: 'Bad Request' },
+          { code: 403, message: 'Forbidden' },
           { code: 404, message: 'Not found' }
         ]
       end
@@ -116,7 +124,7 @@ class Groups < Grape::API
                                            documentation: { param_type: 'body' }
       end
       delete do
-        authorize group_playlist, delete?
+        authorize group_playlist, :delete?
 
         if params[:music_group_playlist_id].instance_of?(Integer)
           group_playlist.music_group_playlists.find_by(music_id: params[:music_group_playlist_id])&.destroy
