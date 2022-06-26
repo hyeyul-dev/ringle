@@ -80,7 +80,7 @@ class Music < ApplicationRecord
     )
   end
 
-  def self.search_published(query, sort, started_at = nil, ended_at = nil)
+  def self.search_published(query, sort='accuracy', started_at = nil, ended_at = nil)
     return [] if query.empty?
 
     if started_at && ended_at

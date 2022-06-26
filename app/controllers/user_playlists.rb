@@ -3,11 +3,27 @@ class UserPlaylists < Grape::API
     attr_writer :user_playlist
 
     def user_playlist
-      @user_playlist ||= current_user.playlist
+      @user_playlist ||= UserPlaylist.find_or_create_by!(user_id: current_user.id)
     end
   end
 
   resource :user_playlists do
+    desc '나의 재생목록의 음악 리스트' do
+      summary '나의 재생목록 리스트'
+      tags ['UserPlayList']
+      failure [
+        { code: 400, message: 'Bad Request' },
+        { code: 403, message: 'Forbidden' },
+        { code: 404, message: 'Not found' }
+      ]
+    end
+
+    get do
+      present :data,
+              user_playlist,
+              with: Entities.playlists::BaseEntity
+    end
+
     desc '재생목록 노래 추가' do
       summary '재생목록 노래 추가'
       tags ['UserPlayList']
@@ -21,6 +37,7 @@ class UserPlaylists < Grape::API
     params do
       requires :music_id, types: [Integer, Array[Integer]], desc: '노래 id', documentation: { param_type: 'body' }
     end
+
     post do
       count = (user_playlist.music_user_playlists.size - 100)
       if params[:music_id].instance_of?(Integer)

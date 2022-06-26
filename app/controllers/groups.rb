@@ -33,7 +33,8 @@ class Groups < Grape::API
       group = Group.new(declared(params))
       group.save!
 
-      present :data, group,
+      present :data,
+              group,
               with: Entities::Groups::BaseEntity
     end
 
@@ -71,11 +72,12 @@ class Groups < Grape::API
       end
       group.update!(update_params)
 
-      present :data, group,
+      present :data,
+              group,
               with: Entities::Groups::BaseEntity
     end
 
-    resource ':group_id/:group_playlists' do
+    resource ':group_id/group_playlists' do
       desc '그룹 재생목록 추가' do
         summary '재생목록 추가'
         tags ['GroupPlaylist']
