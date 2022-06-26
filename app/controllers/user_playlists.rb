@@ -21,7 +21,7 @@ class UserPlaylists < Grape::API
     get do
       present :data,
               user_playlist,
-              with: Entities.playlists::BaseEntity
+              with: Entities::UserPlaylists::BaseEntity
     end
 
     desc '재생목록 노래 추가' do
