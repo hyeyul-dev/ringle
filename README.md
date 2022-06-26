@@ -1,24 +1,30 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### setting
 
-Things you may want to cover:
+설치 
+1. docker : [Install Docker Desktop on Mac | Docker Documentation](https://docs.docker.com/desktop/mac/install/) -> 도커로 Elasticsearch 세팅
 
-* Ruby version
+2. homebrew : [macOS 용 패키지 관리자 — Homebrew](https://brew.sh/index_ko)
 
-* System dependencies
 
-* Configuration
+```ruby
+git clone https://github.com/hyeyul-dev/ringle.git
+```
 
-* Database creation
+```ruby 
+cd ringle 
+docker-compose up
+```
 
-* Database initialization
+### ERD
 
-* How to run the test suite
+![ring_ERD](https://user-images.githubusercontent.com/48707618/175829325-ba31a267-82d5-46f1-b954-ed928a6de46d.png)
 
-* Services (job queues, cache servers, search engines, etc.)
+## API 문서
 
-* Deployment instructions
+### redoc
+https://redocly.github.io/redoc/?nocors&url=http://localhost:3000/swagger_doc
 
-* ...
+### Postman
+https://documenter.getpostman.com/view/12991109/UzBsHPsn
