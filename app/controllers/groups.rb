@@ -7,7 +7,7 @@ class Groups < Grape::API
     end
 
     def group_playlist
-      @group_playlist ||= GroupPlaylist.find(params[:group_id])
+      @group_playlist ||= GroupPlaylist.find_by(group_id: params[:group_id])
     end
   end
 
@@ -87,18 +87,18 @@ class Groups < Grape::API
       end
 
       params do
-        requires :creator_id, type: Integer, desc: '추가한 유저 id', documentation: { param_type: 'body' }
         requires :music_id, types: [Integer, Array[Integer]], desc: '노래 id', documentation: { param_type: 'body' }
       end
       post do
-        authorize group_play_list, :create?
+        authorize group_playlist, :create?
 
         count = (group_playlist.music_group_playlists.size - 100)
         if params[:music_id].instance_of?(Integer)
           group_playlist.music_group_playlists.create!(declared(params))
         else
           music_playlist = params[:music_id].each_with_object([]) do |music_id, arr|
-            arr << group_playlist.music_group_playlists.new(music_id: music_id, created_at: DateTime.now.in_time_zone,
+            arr << group_playlist.music_group_playlists.new(music_id: music_id, creator_id: current_user.id,
+                                                            created_at: DateTime.now.in_time_zone,
                                                             updated_at: DateTime.now.in_time_zone)
           end
           MusicGroupPlaylist.transaction do
@@ -127,9 +127,9 @@ class Groups < Grape::API
         authorize group_playlist, :delete?
 
         if params[:music_group_playlist_id].instance_of?(Integer)
-          group_playlist.music_group_playlists.find_by(music_id: params[:music_group_playlist_id])&.destroy
+          group_playlist.music_group_playlists.find_by(id: params[:music_group_playlist_id])&.destroy
         else
-          group_playlist.music_group_playlists.where(music_id: params[:music_group_playlist_id]).destroy_all
+          group_playlist.music_group_playlists.where(id: params[:music_group_playlist_id]).destroy_all
         end
 
         body nil

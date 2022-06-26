@@ -48,13 +48,14 @@ class UserPlaylists < Grape::API
     end
 
     params do
-      requires :music_id, types: [Integer, Array[Integer]], desc: '추가할 노래 id', documentation: { param_type: 'body' }
+      requires :music_user_playlist_id, types: [Integer, Array[Integer]], desc: '추가할 노래 id',
+                                        documentation: { param_type: 'body' }
     end
     delete do
-      if params[:music_id].instance_of?(Integer)
-        user_playlist.music_user_playlists.find_by(music_id: params[:music_id])&.destroy
+      if params[:music_user_playlist_id].instance_of?(Integer)
+        user_playlist.music_user_playlists.find_by(id: params[:music_user_playlist_id])&.destroy
       else
-        user_playlist.music_user_playlists.where(music_id: params[:music_id]).destroy_all
+        user_playlist.music_user_playlists.where(id: params[:music_user_playlist_id]).destroy_all
       end
 
       body nil
