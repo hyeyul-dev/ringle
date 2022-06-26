@@ -10,8 +10,9 @@
 #
 # Indexes
 #
-#  index_user_groups_on_group_id  (group_id)
-#  index_user_groups_on_user_id   (user_id)
+#  index_user_groups_on_group_id              (group_id)
+#  index_user_groups_on_group_id_and_user_id  (group_id,user_id) UNIQUE
+#  index_user_groups_on_user_id               (user_id)
 #
 # Foreign Keys
 #
@@ -21,4 +22,6 @@
 class UserGroup < ApplicationRecord
   belongs_to :user
   belongs_to :group
+
+  validates :group_id, uniqueness: { scope: [:user_id] }
 end

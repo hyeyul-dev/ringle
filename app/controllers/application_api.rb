@@ -12,4 +12,14 @@ class ApplicationApi < Grape::API
   mount Search
   mount UserPlaylists
   mount Groups
+
+  add_swagger_documentation hide_documentation_path: true,
+                            info: { title: 'Ring Project' },
+                            security_definitions: {
+                              'access-token': {
+                                type: 'integer',
+                                name: 'access-token',
+                                in: 'header'
+                              }
+                            }
 end

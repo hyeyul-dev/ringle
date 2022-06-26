@@ -11,6 +11,7 @@ class UserPlaylists < Grape::API
     desc '나의 재생목록의 음악 리스트' do
       summary '나의 재생목록 리스트'
       tags ['UserPlayList']
+      success model: Entities::UserPlaylists::BaseEntity
       failure [
         { code: 400, message: 'Bad Request' },
         { code: 403, message: 'Forbidden' },

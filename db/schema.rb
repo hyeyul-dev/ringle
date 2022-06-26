@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_25_040944) do
+ActiveRecord::Schema.define(version: 2022_06_26_171836) do
 
   create_table "albums", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2022_06_25_040944) do
     t.bigint "group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id", "user_id"], name: "index_user_groups_on_group_id_and_user_id", unique: true
     t.index ["group_id"], name: "index_user_groups_on_group_id"
     t.index ["user_id"], name: "index_user_groups_on_user_id"
   end

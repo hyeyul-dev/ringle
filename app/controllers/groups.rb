@@ -15,6 +15,7 @@ class Groups < Grape::API
     desc '그룹만들기' do
       summary '그룹만들기'
       tags ['Group']
+      success model: Entities::Groups::BaseEntity
       failure [
         { code: 400, message: 'Bad Request' },
         { code: 403, message: 'Forbidden' },
@@ -38,9 +39,10 @@ class Groups < Grape::API
               with: Entities::Groups::BaseEntity
     end
 
-    desc '그룹 수정 및 유저 추가 및 삭제' do
+    desc '그룹 수정 및 유저 추가' do
       summary '그룹 수정 및 유저 추가'
       tags ['Group']
+      success model: Entities::Groups::BaseEntity
       failure [
         { code: 400, message: 'Bad Request' },
         { code: 403, message: 'Forbidden' },
@@ -50,34 +52,22 @@ class Groups < Grape::API
 
     params do
       optional :name, type: String, desc: '그룹 이름', documentation: { param_type: 'body' }
-      optional :user_groups_attributes, type: Array[JSON], desc: '유저 그룹' do
-        optional :id, type: Integer, desc: '유저 id', documentation: { param_type: 'body' }
+      optional :user_groups, as: :user_groups_attributes, type: Array[JSON], desc: '유저 그룹' do
         optional :user_id, type: Integer, desc: '유저 id', documentation: { param_type: 'body' }
-        optional :_destroy, type: Boolean, desc: '삭제여부'
       end
     end
 
     put ':id' do
       authorize group, :update?
-      update_params = declared(params, include_missing: false)
 
-      if params['user_groups_attributes'].present?
-
-        destroy_user_group_ids = group.user_group_ids - params[:user_groups_attributes].map do |user_group|
-                                                          user_group[:id]
-                                                        end
-
-        destroy_user_groups = destroy_user_group_ids&.map { |id| { id: id, _destroy: true } }
-        update_params[:user_groups_attributes] += destroy_user_groups
-      end
-      group.update!(update_params)
+      group.update!(declared(params, include_missing: false))
 
       present :data,
               group,
               with: Entities::Groups::BaseEntity
     end
 
-    resource ':group_id/group_playlists' do
+    resource ':group_id/playlists' do
       desc '그룹 재생목록 추가' do
         summary '재생목록 추가'
         tags ['GroupPlaylist']
