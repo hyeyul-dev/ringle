@@ -18,6 +18,11 @@ docker-compose build
 docker-compose up
 ```
 
+데이터 생성
+
+```ruby
+rails db:migrate; rails db:seed
+```
 ### ERD
 
 ![ring_ERD](https://user-images.githubusercontent.com/48707618/175829325-ba31a267-82d5-46f1-b954-ed928a6de46d.png)
