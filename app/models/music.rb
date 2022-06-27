@@ -23,7 +23,6 @@ class Music < ApplicationRecord
   index_name [model_name.singular, Rails.env].join('_')
 
   belongs_to :album
-  has_many :music_playlists, dependent: :destroy, inverse_of: :music
   has_many :music_artists, dependent: :destroy, inverse_of: :music
   has_many :artists, through: :music_artists
 

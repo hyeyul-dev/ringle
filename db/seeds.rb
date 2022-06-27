@@ -5,3 +5,25 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'csv'
+file_name = ['melon_sample_2011.csv', 'melon_sample.csv']
+file_name.each do |name|
+  csv_text = File.read(Rails.root.join('lib', 'seeds', name))
+  csv = CSV.parse(csv_text, headers: true, encoding: 'UTF-8')
+  csv.each do |row|
+    # row: 아티스트, 노래,앨범명, 좋아요수
+    artists = row[0].split(',')
+    artists.each do |a|
+      ar = Artist.find_or_create_by!(name: a.to_s)
+      ab = Album.find_or_create_by!(title: row[2].to_s)
+      m = Music.find_or_create_by!(title: row[1].to_s, like_count: row[3].to_i, album_id: ab.id)
+      MusicArtist.find_or_create_by!(music_id: m.id, artist_id: ar.id)
+    end
+  end
+end
+
+%W[\uAC15\uD638\uB3D9 \uC720\uC7AC\uC11D \uC190\uC11D\uAD6C \uC190\uC608\uC9C4 \uD55C\uAC00\uC778 \uAE40\uD0DC\uD76C
+   \uC774\uBCD1\uD5CC \uC1A1\uD61C\uAD50].each do |name|
+  User.find_or_create_by!(name: name)
+end
