@@ -40,7 +40,7 @@ class UserPlaylists < Grape::API
     end
 
     post do
-      count = (user_playlist.music_user_playlists.size - 100)
+      destroy_count = (user_playlist.music_user_playlists.size - 100)
       if params[:music_id].instance_of?(Integer)
         user_playlist.music_user_playlists.create!(music_id: params[:music_id])
       else
@@ -48,7 +48,7 @@ class UserPlaylists < Grape::API
           arr << user_playlist.music_user_playlists.new(music_id: music_id, created_at: DateTime.now.in_time_zone,
                                                         updated_at: DateTime.now.in_time_zone)
         end
-        user_playlist.music_user_playlists.order(:id).limit(count).destroy_all if count.positive?
+        user_playlist.music_user_playlists.order(:id).limit(destroy_count).destroy_all if destroy_count.positive?
         MusicUserPlaylist.insert_all!(music_playlists.as_json)
       end
 

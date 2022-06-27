@@ -84,7 +84,7 @@ class Groups < Grape::API
       post do
         authorize group_playlist, :create?
 
-        count = (group_playlist.music_group_playlists.size - 100)
+        destroy_count = (group_playlist.music_group_playlists.size - 100)
         if params[:music_id].instance_of?(Integer)
           group_playlist.music_group_playlists.create!(declared(params))
         else
@@ -94,7 +94,7 @@ class Groups < Grape::API
                                                             updated_at: DateTime.now.in_time_zone)
           end
           MusicGroupPlaylist.transaction do
-            group_playlist.music_group_playlists.order(:id).limit(count).destroy_all if count.positive?
+            group_playlist.music_group_playlists.order(:id).limit(destroy_count).destroy_all if destroy_count.positive?
             MusicGroupPlaylist.insert_all!(music_playlist.as_json)
           end
         end
