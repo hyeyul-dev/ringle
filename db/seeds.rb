@@ -24,6 +24,9 @@ file_name.each do |name|
 end
 
 %W[\uAC15\uD638\uB3D9 \uC720\uC7AC\uC11D \uC190\uC11D\uAD6C \uC190\uC608\uC9C4 \uD55C\uAC00\uC778 \uAE40\uD0DC\uD76C
-   \uC774\uBCD1\uD5CC \uC1A1\uD61C\uAD50].each do |name|
-  User.find_or_create_by!(name: name)
+   \uC774\uBCD1\uD5CC \uC1A1\uD61C\uAD50].each_with_index do |name, i|
+  user = User.find_or_create_by!(name: name)
+  group = Group.find_or_create_by!(name: "#{name}_그룹")
+  UserGroup.find_or_create_by!(user_id: user.id, group_id: group.id)
+  UserGroup.find_or_create_by!(user_id: i, group_id: group.id) unless i.zero?
 end
