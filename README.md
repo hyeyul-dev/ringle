@@ -1,6 +1,6 @@
 # README
 
-### setting
+### Setting
 
 설치 
 1. docker : [Install Docker Desktop on Mac | Docker Documentation](https://docs.docker.com/desktop/mac/install/) -> 도커로 Elasticsearch 세팅
