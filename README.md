@@ -17,7 +17,8 @@ cd ringle
 docker-compose build
 docker-compose up
 ```
-#### data import
+
+데이터 생성
 
 ```ruby
 rails db:migrate; rails db:seed
