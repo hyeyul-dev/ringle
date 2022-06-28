@@ -10,11 +10,11 @@
 class Artist < ApplicationRecord
   has_many :music_artists
   has_many :musics, through: :music_artists
-  after_commit :update_musics, on: :update
+  after_commit :update_to_elasticsearch, on: :update
 
   private
 
-  def update_musics
-    Music.update_music(musics)
+  def update_to_elasticsearch
+    Search::Music.update_to_elasticsearch(musics)
   end
 end

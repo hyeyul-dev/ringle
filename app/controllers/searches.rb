@@ -1,9 +1,9 @@
-class Search < Grape::API
+class Searches < Grape::API
   resource :search do
     desc '음원 데이터 검색' do
       summary '음원 검색'
       tags ['search']
-      success model: Entities::Search::BaseEntity, is_array: true
+      success model: Entities::Searches::BaseEntity, is_array: true
       failure [
         { code: 404, message: 'Not found' }
       ]
@@ -19,10 +19,11 @@ class Search < Grape::API
       optional :ended_at, type: Date, desc: '종료 시점', documentation: { param_type: 'query' }
     end
     get do
-      search_results = Music.search_published(params[:q], params[:sort], params[:started_at], params[:ended_at])
-                            .page(params[:page]).per(params[:size]).pluck(:_source)
+      search_results = Search::Music.search_published(params[:q], params[:sort], params[:started_at],
+                                                      params[:ended_at])
+                                    .page(params[:page]).per(params[:size]).pluck(:_source)
 
-      present :data, search_results, with: Entities::Search::BaseEntity
+      present :data, search_results, with: Entities::Searches::BaseEntity
     end
   end
 end

@@ -9,7 +9,7 @@ class ApplicationApi < Grape::API
     end
   end
 
-  mount Search
+  mount Searches
   mount UserPlaylists
   mount Groups
 

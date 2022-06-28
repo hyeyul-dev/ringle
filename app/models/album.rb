@@ -12,11 +12,9 @@ class Album < ApplicationRecord
   has_many :musics, dependent: :destroy
   has_many :artists, through: :musics
 
-  after_commit :update_musics, on: :update
+  after_commit :update_to_elasticsearch, on: :update
 
-  private
-
-  def update_musics
-    Music.update_album(self)
+  def update_to_elasticsearch
+    Search::Music.update_album(self)
   end
 end

@@ -1,4 +1,4 @@
-class Entities::Search::BaseEntity < Grape::Entity
+class Entities::Searches::BaseEntity < Grape::Entity
   expose :music, using: Entities::Musics::DetailEntity
   expose :album, using: Entities::Albums::BaseEntity
 
