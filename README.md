@@ -23,9 +23,10 @@ docker-compose up
 ```ruby
 rails db:migrate; rails db:seed
 ```
+
 ### ERD
 
-![ring_ERD](https://user-images.githubusercontent.com/48707618/175829325-ba31a267-82d5-46f1-b954-ed928a6de46d.png)
+![ERD](https://user-images.githubusercontent.com/48707618/176189891-210d8639-4710-4afc-aa40-523cd7f4b2dc.png)
 
 
 ## API 문서
