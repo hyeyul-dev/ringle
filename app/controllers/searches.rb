@@ -21,7 +21,9 @@ class Searches < Grape::API
     get do
       search_results = Search::Music.search_published(params[:q], params[:sort], params[:started_at],
                                                       params[:ended_at])
-                                    .page(params[:page]).per(params[:size]).pluck(:_source)
+      unless search_results.pluck(:_source).empty?
+        search_results = search_results.page(params[:page]).per(params[:size]).pluck(:_source)
+      end
 
       present :data, search_results, with: Entities::Searches::BaseEntity
     end
