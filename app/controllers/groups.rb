@@ -118,11 +118,7 @@ class Groups < Grape::API
       delete do
         authorize group_playlist, :delete?
 
-        if params[:music_group_playlist_id].instance_of?(Integer)
-          group_playlist.music_group_playlists.find_by(id: params[:music_group_playlist_id])&.destroy
-        else
-          group_playlist.music_group_playlists.where(id: params[:music_group_playlist_id]).destroy_all
-        end
+        group_playlist.music_group_playlists.destroy_by(id: params[:music_group_playlist_id])
 
         body nil
       end
