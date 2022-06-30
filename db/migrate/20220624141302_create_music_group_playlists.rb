@@ -1,6 +1,6 @@
-class CreateMusicGroupPlayLists < ActiveRecord::Migration[6.1]
+class CreateMusicGroupPlaylists < ActiveRecord::Migration[6.1]
   def up
-    create_table :music_group_play_lists do |t|
+    create_table :music_group_playlists do |t|
       t.references :group_playlist, null: false, foreign_key: true
       t.references :music, null: false, foreign_key: true
 
@@ -9,6 +9,6 @@ class CreateMusicGroupPlayLists < ActiveRecord::Migration[6.1]
   end
 
   def down
-    drop_table :music_group_play_lists
+    drop_table :music_group_playlists
   end
 end

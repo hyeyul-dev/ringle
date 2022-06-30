@@ -1,6 +1,9 @@
 class UserPlaylistPolicy < ApplicationPolicy
   def show?
-    record.user_id == user.id
+    if record.user_id == user.id
+    else
+      record.errors.add(:user, 'User is not invalid')
+    end
   end
 
   alias update? show?
