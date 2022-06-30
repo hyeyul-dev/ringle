@@ -14,7 +14,6 @@ git clone https://github.com/hyeyul-dev/ringle.git
 
 ```ruby 
 cd ringle 
-docker-compose build
 docker-compose up
 ```
 
